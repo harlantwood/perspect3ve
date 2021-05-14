@@ -234,14 +234,6 @@
     {/if}
     
     <style>
-        main {
-            height: 100%;
-            text-align: center;
-            padding: 0;
-            max-width: 240px;
-            margin: 0 auto;
-        }
-    
         h1 {
             color: #00c3ff;
             text-transform: uppercase;
@@ -255,10 +247,4 @@
 			margin-right: auto;
 			width: 380px;
 		}
-    
-        @media (min-width: 640px) {
-            main {
-                max-width: none;
-            }
-        }
     </style>
