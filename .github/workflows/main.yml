@@ -1,0 +1,36 @@
+name: CI
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
+        node-version: [14.x]
+
+    steps:
+      - run: uname -a
+      - run: node -v
+      - run: npm -v
+
+      - name: Fetch source code
+        uses: actions/checkout@v2
+
+      - name: Use Nix
+        uses: cachix/install-nix-action@v12
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Configure Nix substituters
+        run: mkdir -p ~/.config/nix/ && cp ./.github/nix.conf ~/.config/nix/
+
+      - name: Prepare Nix environment
+        run: nix-shell --command "echo Completed"
+
+      - name: Build
+        run: npm install && npm run build
